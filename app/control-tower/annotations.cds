@@ -1,0 +1,1 @@
+using HackfestService as service from '../../srv/service';
