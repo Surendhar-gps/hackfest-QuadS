@@ -19,3 +19,6 @@ mta_archives/
 @cds-models
 .env
 .env.*
+
+db.sqlite-shm
+db.sqlite-wal

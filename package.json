@@ -19,7 +19,8 @@
     "undeploy": "cf undeploy hackfest-app --delete-services --delete-service-keys --delete-service-brokers",
     "build": "rimraf resources mta_archives && mbt build --mtar archive",
     "deploy": "cf deploy mta_archives/archive.mtar --retries 1",
-    "watch-control-tower": "cds watch --open hackfest.controltower/index.html?sap-ui-xx-viewCache=false --livereload false"
+    "watch-control-tower": "cds watch --open hackfest.controltower/index.html?sap-ui-xx-viewCache=false --livereload false",
+    "test": "node --experimental-vm-modules test/supplyChain.test.js"
   },
   "private": true,
   "cds": {

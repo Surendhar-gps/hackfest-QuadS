@@ -5,16 +5,11 @@
     "type": "application",
     "i18n": "i18n/i18n.properties",
     "applicationVersion": {
-      "version": "0.0.1"
+      "version": "1.0.0"
     },
     "title": "{{appTitle}}",
     "description": "{{appDescription}}",
     "resources": "resources.json",
-    "sourceTemplate": {
-      "id": "@sap/generator-fiori:lrop",
-      "version": "1.32.0",
-      "toolsId": "fd97d98c-cf3f-480c-843c-50ec03b43573"
-    },
     "dataSources": {
       "mainService": {
         "uri": "/odata/v4/hackfest/",
@@ -29,7 +24,7 @@
   "sap.ui": {
     "technology": "UI5",
     "icons": {
-      "icon": "",
+      "icon": "sap-icon://overview-chart",
       "favIcon": "",
       "phone": "",
       "phone@2": "",
@@ -39,22 +34,30 @@
     "deviceTypes": {
       "desktop": true,
       "tablet": true,
-      "phone": true
+      "phone": false
     }
   },
   "sap.ui5": {
-    "flexEnabled": true,
+    "flexEnabled": false,
+    "rootView": {
+      "viewName": "hackfest.controltower.view.App",
+      "type": "XML",
+      "async": true,
+      "id": "rootView"
+    },
     "dependencies": {
-      "minUI5Version": "1.152.0",
+      "minUI5Version": "1.120.0",
       "libs": {
         "sap.m": {},
         "sap.ui.core": {},
-        "sap.fe.templates": {}
+        "sap.ui.layout": {},
+        "sap.uxap": {},
+        "sap.f": {}
       }
     },
     "contentDensities": {
       "compact": true,
-      "cozy": true
+      "cozy": false
     },
     "models": {
       "i18n": {
@@ -71,65 +74,44 @@
           "autoExpandSelect": true,
           "earlyRequests": true
         }
-      },
-      "@i18n": {
-        "type": "sap.ui.model.resource.ResourceModel",
-        "uri": "i18n/i18n.properties"
       }
     },
     "resources": {
-      "css": []
+      "css": [
+        {
+          "uri": "css/style.css"
+        }
+      ]
     },
     "routing": {
-      "config": {},
+      "config": {
+        "routerClass": "sap.m.routing.Router",
+        "viewType": "XML",
+        "viewPath": "hackfest.controltower.view",
+        "controlId": "appShell",
+        "controlAggregation": "pages",
+        "async": true
+      },
       "routes": [
         {
-          "pattern": ":?query:",
-          "name": "SuppliersList",
-          "target": "SuppliersList"
+          "pattern": "",
+          "name": "Dashboard",
+          "target": "Dashboard"
         },
         {
-          "pattern": "Suppliers({key}):?query:",
-          "name": "SuppliersObjectPage",
-          "target": "SuppliersObjectPage"
+          "pattern": "disruption/{disruptionId}",
+          "name": "DisruptionDetail",
+          "target": "DisruptionDetail"
         }
       ],
       "targets": {
-        "SuppliersList": {
-          "type": "Component",
-          "id": "SuppliersList",
-          "name": "sap.fe.templates.ListReport",
-          "options": {
-            "settings": {
-              "contextPath": "/Suppliers",
-              "variantManagement": "Page",
-              "navigation": {
-                "Suppliers": {
-                  "detail": {
-                    "route": "SuppliersObjectPage"
-                  }
-                }
-              },
-              "controlConfiguration": {
-                "@com.sap.vocabularies.UI.v1.LineItem": {
-                  "tableSettings": {
-                    "type": "ResponsiveTable"
-                  }
-                }
-              }
-            }
-          }
+        "Dashboard": {
+          "viewName": "Dashboard",
+          "viewId": "Dashboard"
         },
-        "SuppliersObjectPage": {
-          "type": "Component",
-          "id": "SuppliersObjectPage",
-          "name": "sap.fe.templates.ObjectPage",
-          "options": {
-            "settings": {
-              "editableHeaderContent": false,
-              "contextPath": "/Suppliers"
-            }
-          }
+        "DisruptionDetail": {
+          "viewName": "DisruptionDetail",
+          "viewId": "DisruptionDetail"
         }
       }
     }
@@ -137,10 +119,5 @@
   "sap.fiori": {
     "registrationIds": [],
     "archeType": "transactional"
-  },
-  "sap.fe": {
-    "app": {
-      "enableLazyLoading": true
-    }
   }
 }

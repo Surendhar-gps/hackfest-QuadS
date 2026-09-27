@@ -1,0 +1,217 @@
+<mvc:View
+    controllerName="hackfest.controltower.controller.Dashboard"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    displayBlock="true">
+
+    <Page
+        id="dashboardPage"
+        showHeader="false"
+        class="sapUiContentPadding">
+
+        <customHeader>
+            <Toolbar>
+                <Title
+                    text="Supply Chain Control Tower"
+                    level="H2" />
+
+                <ToolbarSpacer />
+
+                <Button
+                    text="Refresh"
+                    icon="sap-icon://refresh"
+                    type="Transparent"
+                    press=".onRefresh" />
+            </Toolbar>
+        </customHeader>
+
+        <content>
+
+            <VBox class="sapUiMediumMarginBottom">
+
+                <Title
+                    text="Disruption Overview"
+                    level="H2"
+                    class="sapUiSmallMarginBottom" />
+
+                <HBox
+                    width="100%"
+                    justifyContent="SpaceBetween"
+                    wrap="Wrap">
+
+                    <VBox
+                        width="23%"
+                        class="sapUiSmallMarginEnd sapUiSmallMarginBottom">
+
+                        <ObjectStatus
+                            id="kpiOpenDisruptions"
+                            title="Open Disruptions"
+                            text="0"
+                            state="Error"
+                            icon="sap-icon://alert" />
+                    </VBox>
+
+                    <VBox
+                        width="23%"
+                        class="sapUiSmallMarginEnd sapUiSmallMarginBottom">
+
+                        <ObjectStatus
+                            id="kpiAtRisk"
+                            title="At-Risk Production"
+                            text="0"
+                            state="Warning"
+                            icon="sap-icon://factory" />
+                    </VBox>
+
+                    <VBox
+                        width="23%"
+                        class="sapUiSmallMarginEnd sapUiSmallMarginBottom">
+
+                        <ObjectStatus
+                            id="kpiPendingApprovals"
+                            title="Pending Approvals"
+                            text="0"
+                            state="Warning"
+                            icon="sap-icon://pending" />
+                    </VBox>
+
+                    <VBox
+                        width="23%"
+                        class="sapUiSmallMarginBottom">
+
+                        <ObjectStatus
+                            id="kpiActiveRecoveries"
+                            title="Active Recoveries"
+                            text="0"
+                            state="Success"
+                            icon="sap-icon://process" />
+                    </VBox>
+
+                </HBox>
+
+            </VBox>
+
+            <MessageStrip
+                id="dashboardMsg"
+                text="Monitor supply-chain disruptions, evaluate recovery options, and manage approvals."
+                type="Information"
+                showIcon="true"
+                class="sapUiSmallMarginBottom" />
+
+            <Toolbar class="sapUiSmallMarginBottom">
+
+                <Title
+                    text="Active Disruptions"
+                    level="H3" />
+
+                <ToolbarSpacer />
+
+                <SearchField
+                    width="18rem"
+                    placeholder="Search disruptions"
+                    liveChange=".onSearch" />
+
+            </Toolbar>
+
+            <Table
+                id="disruptionsTable"
+                items="{/Disruptions}"
+                growing="true"
+                growingThreshold="20"
+                mode="None"
+                noDataText="No active disruptions found">
+
+                <columns>
+
+                    <Column>
+                        <Text text="Severity" />
+                    </Column>
+
+                    <Column>
+                        <Text text="Type" />
+                    </Column>
+
+                    <Column>
+                        <Text text="Description" />
+                    </Column>
+
+                    <Column>
+                        <Text text="Status" />
+                    </Column>
+
+                    <Column>
+                        <Text text="Delay" />
+                    </Column>
+
+                    <Column>
+                        <Text text="Detected At" />
+                    </Column>
+
+                    <Column width="8rem">
+                        <Text text="Action" />
+                    </Column>
+
+                </columns>
+
+                <items>
+
+                    <ColumnListItem
+                        type="Navigation"
+                        press=".onDisruptionPress">
+
+                        <cells>
+
+                            <ObjectStatus
+                                text="{severity}"
+                                state="Error" />
+
+                            <Text
+                                text="{type}" />
+
+                            <Text
+                                text="{description}"
+                                wrapping="true" />
+
+                            <ObjectStatus
+                                text="{status}" />
+
+                            <Text
+                                text="{estimatedDelayDays} days" />
+
+                            <Text
+                                text="{detectedAt}" />
+
+                            <Button
+                                text="Investigate"
+                                type="Emphasized"
+                                press=".onInvestigatePress" />
+
+                        </cells>
+
+                    </ColumnListItem>
+
+                </items>
+
+            </Table>
+
+        </content>
+
+        <footer>
+
+            <Toolbar>
+
+                <ToolbarSpacer />
+
+                <ObjectStatus
+                    text="Control Tower"
+                    state="Success"
+                    icon="sap-icon://connected" />
+
+            </Toolbar>
+
+        </footer>
+
+    </Page>
+
+</mvc:View>

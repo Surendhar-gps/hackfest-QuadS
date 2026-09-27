@@ -1,0 +1,7 @@
+ID,orderNumber,requiredQuantity,dueDate,status,priority,material_ID,plant_ID,disruption_ID
+aaaaaaaa-1111-1111-1111-aaaaaaaaaaaa,PO-2026-1001,280,2026-10-02,AtRisk,High,aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa,22222222-bbbb-bbbb-bbbb-222222222222,dddddddd-dddd-dddd-dddd-dddddddddddd
+bbbbbbbb-2222-2222-2222-bbbbbbbbbbbb,PO-2026-1002,210,2026-10-05,Confirmed,High,aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa,22222222-bbbb-bbbb-bbbb-222222222222,dddddddd-dddd-dddd-dddd-dddddddddddd
+cccccccc-3333-3333-3333-cccccccccccc,PO-2026-1003,336,2026-10-04,AtRisk,High,bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb,22222222-bbbb-bbbb-bbbb-222222222222,eeeeeeee-eeee-eeee-eeee-eeeeeeeeeeee
+dddddddd-4444-4444-4444-dddddddddddd,PO-2026-1004,168,2026-10-08,Confirmed,Medium,bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb,22222222-bbbb-bbbb-bbbb-222222222222,eeeeeeee-eeee-eeee-eeee-eeeeeeeeeeee
+eeeeeeee-5555-5555-5555-eeeeeeeeeeee,PO-2026-1005,112,2026-10-06,AtRisk,High,cccccccc-cccc-cccc-cccc-cccccccccccc,11111111-aaaa-aaaa-aaaa-111111111111,ffffffff-ffff-ffff-ffff-ffffffffffff
+ffffffff-6666-6666-6666-ffffffffffff,PO-2026-1006,200,2026-10-10,Confirmed,Medium,dddddddd-dddd-dddd-dddd-dddddddddddd,11111111-aaaa-aaaa-aaaa-111111111111,

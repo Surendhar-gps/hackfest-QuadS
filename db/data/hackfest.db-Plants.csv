@@ -1,0 +1,6 @@
+ID,name,location,country,plantCode,plantType,dailyCapacity,dailyDemand,safetyStockDays,operatingStatus,isSisterPlant
+11111111-aaaa-aaaa-aaaa-111111111111,Bangalore Assembly Plant,Bangalore,India,BLR-01,Assembly,5000,280,3,Operational,false
+22222222-bbbb-bbbb-bbbb-222222222222,Chennai Manufacturing Plant,Chennai,India,CHN-01,Manufacturing,6000,320,3,Operational,false
+33333333-cccc-cccc-cccc-333333333333,Hosur Plant (Sister),Hosur,India,HSR-01,Assembly,4500,180,3,Operational,true
+44444444-dddd-dddd-dddd-444444444444,Pune Distribution Centre,Pune,India,PNE-01,Distribution,3000,150,2,Operational,true
+55555555-eeee-eeee-eeee-555555555555,Hyderabad Warehouse,Hyderabad,India,HYD-01,Warehouse,2000,90,2,Operational,true

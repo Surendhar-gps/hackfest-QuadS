@@ -1,0 +1,6 @@
+ID,availableQuantity,leadTimeDays,unitCost,transitDays,status,certificationStatus,notes,supplier_ID,material_ID
+aaaaaaaa-alt1-alt1-alt1-aaaaaaaaaaaa,500,6,92.00,2,Available,Certified,Pre-qualified supplier for BRK-001. Can expedite with 48h notice.,22222222-2222-2222-2222-222222222222,aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa
+bbbbbbbb-alt2-alt2-alt2-bbbbbbbbbbbb,300,7,95.50,3,Available,Certified,Secondary approved supplier for BRK-001.,33333333-3333-3333-3333-333333333333,aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa
+cccccccc-alt3-alt3-alt3-cccccccccccc,400,5,252.00,2,Available,Certified,Certified for ENG-002. Quality inspection passed Q3 2026.,33333333-3333-3333-3333-333333333333,bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb
+dddddddd-alt4-alt4-alt4-dddddddddddd,200,8,260.00,4,Limited,Pending,Pending re-certification. Capacity limited to 200 units per order.,44444444-4444-4444-4444-444444444444,bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb
+eeeeeeee-alt5-alt5-alt5-eeeeeeeeeeee,350,14,435.00,5,Available,Certified,Global Battery Tech Singapore. Air freight available for expediting.,44444444-4444-4444-4444-444444444444,cccccccc-cccc-cccc-cccc-cccccccccccc

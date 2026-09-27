@@ -1,0 +1,1474 @@
+<mvc:View
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:uxap="sap.uxap"
+    xmlns:core="sap.ui.core"
+    controllerName="hackfest.controltower.controller.DisruptionDetail"
+    displayBlock="true">
+
+    <uxap:ObjectPageLayout
+        id="detailPage"
+        showTitleInHeaderContent="true"
+        alwaysShowContentHeader="false"
+        preserveHeaderStateOnScroll="false">
+
+        <uxap:headerTitle>
+            <uxap:ObjectPageDynamicHeaderTitle>
+
+                <uxap:expandedHeading>
+                    <VBox>
+                        <HBox alignItems="Center">
+                            <Button
+                                icon="sap-icon://nav-back"
+                                press=".onNavBack"
+                                type="Transparent"
+                                class="sapUiSmallMarginEnd" />
+
+                            <Title
+                                id="detailTitle"
+                                text="Disruption Detail"
+                                level="H1" />
+                        </HBox>
+
+                        <HBox
+                            alignItems="Center"
+                            class="sapUiTinyMarginTop">
+
+                            <ObjectStatus
+                                id="headerSeverity"
+                                text=""
+                                class="sapUiSmallMarginEnd" />
+
+                            <ObjectStatus
+                                id="headerStatus"
+                                text="" />
+                        </HBox>
+                    </VBox>
+                </uxap:expandedHeading>
+
+                <uxap:snappedHeading>
+                    <HBox alignItems="Center">
+
+                        <Button
+                            icon="sap-icon://nav-back"
+                            press=".onNavBack"
+                            type="Transparent" />
+
+                        <Title
+                            id="detailTitleSnapped"
+                            text="Disruption Detail"
+                            level="H3" />
+                    </HBox>
+                </uxap:snappedHeading>
+
+                <uxap:actions>
+                    <Button
+                        id="btnRefreshDetail"
+                        icon="sap-icon://refresh"
+                        text="Refresh"
+                        press=".onRefreshDetail"
+                        type="Transparent" />
+                </uxap:actions>
+
+            </uxap:ObjectPageDynamicHeaderTitle>
+        </uxap:headerTitle>
+
+        <uxap:headerContent>
+            <HBox
+                wrap="Wrap"
+                alignItems="Start">
+
+                <VBox class="sapUiSmallMarginEnd">
+                    <Label text="Type" />
+                    <ObjectStatus id="hdrType" text="" />
+                </VBox>
+
+                <VBox class="sapUiSmallMarginEnd">
+                    <Label text="Supplier" />
+                    <Text id="hdrSupplier" text="" />
+                </VBox>
+
+                <VBox class="sapUiSmallMarginEnd">
+                    <Label text="Material" />
+                    <Text id="hdrMaterial" text="" />
+                </VBox>
+
+                <VBox class="sapUiSmallMarginEnd">
+                    <Label text="Affected Plant" />
+                    <Text id="hdrPlant" text="" />
+                </VBox>
+
+                <VBox class="sapUiSmallMarginEnd">
+                    <Label text="Delay" />
+                    <ObjectNumber
+                        id="hdrDelay"
+                        number=""
+                        unit="days" />
+                </VBox>
+
+                <VBox>
+                    <Label text="Detected" />
+                    <Text id="hdrDetected" text="" />
+                </VBox>
+
+            </HBox>
+        </uxap:headerContent>
+
+        <uxap:sections>
+
+            <uxap:ObjectPageSection
+                id="secOverview"
+                title="Overview">
+
+                <uxap:subSections>
+                    <uxap:ObjectPageSubSection>
+
+                        <uxap:blocks>
+                            <VBox class="sapUiSmallMargin">
+
+                                <MessageStrip
+                                    id="overviewMsg"
+                                    visible="false"
+                                    showCloseButton="false"
+                                    class="sapUiSmallMarginBottom" />
+
+                                <f:SimpleForm
+                                    layout="ResponsiveGridLayout"
+                                    columnsM="2"
+                                    columnsL="3"
+                                    columnsXL="4">
+
+                                    <f:content>
+
+                                        <Label text="Description" />
+                                        <Text
+                                            id="ovDescription"
+                                            text=""
+                                            wrapping="true"
+                                            width="100%" />
+
+                                        <Label text="Type" />
+                                        <ObjectStatus
+                                            id="ovType"
+                                            text="" />
+
+                                        <Label text="Severity" />
+                                        <ObjectStatus
+                                            id="ovSeverity"
+                                            text="" />
+
+                                        <Label text="Delay (days)" />
+                                        <ObjectNumber
+                                            id="ovDelay"
+                                            number=""
+                                            unit="days" />
+
+                                        <Label text="Supplier" />
+                                        <Text
+                                            id="ovSupplier"
+                                            text="" />
+
+                                        <Label text="Supplier Risk" />
+                                        <ObjectStatus
+                                            id="ovSupplierRisk"
+                                            text="" />
+
+                                        <Label text="Material" />
+                                        <Text
+                                            id="ovMaterial"
+                                            text="" />
+
+                                        <Label text="Affected Plant" />
+                                        <Text
+                                            id="ovPlant"
+                                            text="" />
+
+                                        <Label text="Status" />
+                                        <ObjectStatus
+                                            id="ovStatus"
+                                            text="" />
+
+                                        <Label text="Detected At" />
+                                        <Text
+                                            id="ovDetected"
+                                            text="" />
+
+                                    </f:content>
+                                </f:SimpleForm>
+
+                            </VBox>
+                        </uxap:blocks>
+
+                    </uxap:ObjectPageSubSection>
+                </uxap:subSections>
+
+            </uxap:ObjectPageSection>
+
+            <uxap:ObjectPageSection
+                id="secImpact"
+                title="Impact Analysis">
+
+                <uxap:subSections>
+                    <uxap:ObjectPageSubSection>
+
+                        <uxap:blocks>
+                            <VBox class="sapUiSmallMargin">
+
+                                <HBox class="sapUiSmallMarginBottom">
+                                    <Button
+                                        id="btnAnalyze"
+                                        text="Run Impact Analysis"
+                                        type="Emphasized"
+                                        icon="sap-icon://simulate"
+                                        press=".onAnalyzeDisruption" />
+                                </HBox>
+
+                                <MessageStrip
+                                    id="impactMsg"
+                                    visible="false"
+                                    showCloseButton="false"
+                                    class="sapUiSmallMarginBottom" />
+
+                                <HBox
+                                    id="impactKpiRow"
+                                    visible="false"
+                                    wrap="Wrap"
+                                    class="sapUiSmallMarginBottom">
+
+                                    <Panel
+                                        class="ctKpiCard sapUiSmallMarginEnd sapUiSmallMarginBottom"
+                                        width="160px">
+                                        <content>
+                                            <VBox class="sapUiSmallMarginBeginEnd sapUiSmallMarginTopBottom">
+                                                <ObjectNumber
+                                                    id="impCurrentInv"
+                                                    number="—"
+                                                    unit="units"
+                                                    state="None"
+                                                    emphasized="true" />
+                                                <Text
+                                                    text="Current Inventory"
+                                                    class="ctKpiLabel" />
+                                            </VBox>
+                                        </content>
+                                    </Panel>
+
+                                    <Panel
+                                        class="ctKpiCard sapUiSmallMarginEnd sapUiSmallMarginBottom"
+                                        width="160px">
+                                        <content>
+                                            <VBox class="sapUiSmallMarginBeginEnd sapUiSmallMarginTopBottom">
+                                                <ObjectNumber
+                                                    id="impShortage"
+                                                    number="—"
+                                                    unit="units"
+                                                    state="Error"
+                                                    emphasized="true" />
+                                                <Text
+                                                    text="Shortage"
+                                                    class="ctKpiLabel" />
+                                            </VBox>
+                                        </content>
+                                    </Panel>
+
+                                    <Panel
+                                        class="ctKpiCard sapUiSmallMarginEnd sapUiSmallMarginBottom"
+                                        width="160px">
+                                        <content>
+                                            <VBox class="sapUiSmallMarginBeginEnd sapUiSmallMarginTopBottom">
+                                                <ObjectNumber
+                                                    id="impDaysStock"
+                                                    number="—"
+                                                    unit="days"
+                                                    state="None"
+                                                    emphasized="true" />
+                                                <Text
+                                                    text="Days of Stock"
+                                                    class="ctKpiLabel" />
+                                            </VBox>
+                                        </content>
+                                    </Panel>
+
+                                    <Panel
+                                        class="ctKpiCard sapUiSmallMarginEnd sapUiSmallMarginBottom"
+                                        width="160px">
+                                        <content>
+                                            <VBox class="sapUiSmallMarginBeginEnd sapUiSmallMarginTopBottom">
+                                                <ObjectStatus
+                                                    id="impStockout"
+                                                    text="—"
+                                                    state="None" />
+                                                <Text
+                                                    text="Stockout During Disruption"
+                                                    class="ctKpiLabel" />
+                                            </VBox>
+                                        </content>
+                                    </Panel>
+
+                                    <Panel
+                                        class="ctKpiCard sapUiSmallMarginEnd sapUiSmallMarginBottom"
+                                        width="160px">
+                                        <content>
+                                            <VBox class="sapUiSmallMarginBeginEnd sapUiSmallMarginTopBottom">
+                                                <ObjectNumber
+                                                    id="impOrdersAtRisk"
+                                                    number="—"
+                                                    unit="orders"
+                                                    state="Warning"
+                                                    emphasized="true" />
+                                                <Text
+                                                    text="Production Orders at Risk"
+                                                    class="ctKpiLabel" />
+                                            </VBox>
+                                        </content>
+                                    </Panel>
+
+                                    <Panel
+                                        class="ctKpiCard sapUiSmallMarginBottom"
+                                        width="160px">
+                                        <content>
+                                            <VBox class="sapUiSmallMarginBeginEnd sapUiSmallMarginTopBottom">
+                                                <ObjectNumber
+                                                    id="impQtyAtRisk"
+                                                    number="—"
+                                                    unit="units"
+                                                    state="Warning"
+                                                    emphasized="true" />
+                                                <Text
+                                                    text="Production Qty at Risk"
+                                                    class="ctKpiLabel" />
+                                            </VBox>
+                                        </content>
+                                    </Panel>
+
+                                </HBox>
+
+                                <Panel
+                                    id="impactDetails"
+                                    visible="false"
+                                    class="sapUiSmallMarginBottom">
+
+                                    <content>
+                                        <f:SimpleForm
+                                            layout="ResponsiveGridLayout"
+                                            columnsM="2"
+                                            columnsL="3">
+
+                                            <f:content>
+
+                                                <Label text="Daily Consumption Rate" />
+                                                <ObjectNumber
+                                                    id="impDailyConsumption"
+                                                    number="—"
+                                                    unit="units/day" />
+
+                                                <Label text="Required Quantity" />
+                                                <ObjectNumber
+                                                    id="impRequiredQty"
+                                                    number="—"
+                                                    unit="units" />
+
+                                                <Label text="Estimated Stockout Date" />
+                                                <Text
+                                                    id="impStockoutDate"
+                                                    text="—" />
+
+                                                <Label text="Financial Exposure" />
+                                                <ObjectNumber
+                                                    id="impFinancial"
+                                                    number="—"
+                                                    unit="USD"
+                                                    state="Error" />
+
+                                                <Label text="Production Risk Level" />
+                                                <ObjectStatus
+                                                    id="impProdRisk"
+                                                    text="—" />
+
+                                                <Label text="Below Reorder Level" />
+                                                <ObjectStatus
+                                                    id="impBelowReorder"
+                                                    text="—" />
+
+                                            </f:content>
+                                        </f:SimpleForm>
+                                    </content>
+                                </Panel>
+
+                                <Text
+                                    id="impactEmptyText"
+                                    text="{i18n>impact.noData}"
+                                    class="ctEmptyState"
+                                    visible="true" />
+
+                            </VBox>
+                        </uxap:blocks>
+
+                    </uxap:ObjectPageSubSection>
+                </uxap:subSections>
+
+            </uxap:ObjectPageSection>
+
+            <uxap:ObjectPageSection
+                id="secRecovery"
+                title="Recovery Options">
+
+                <uxap:subSections>
+                    <uxap:ObjectPageSubSection>
+
+                        <uxap:blocks>
+                            <VBox class="sapUiSmallMargin">
+
+                                <HBox class="sapUiSmallMarginBottom">
+                                    <Button
+                                        id="btnGenerateRecovery"
+                                        text="Generate Recovery Plans"
+                                        type="Emphasized"
+                                        icon="sap-icon://supplier"
+                                        press=".onGenerateRecovery" />
+                                </HBox>
+
+                                <MessageStrip
+                                    id="recoveryMsg"
+                                    visible="false"
+                                    showCloseButton="false"
+                                    class="sapUiSmallMarginBottom" />
+
+                                <Table
+                                    id="recoveryTable"
+                                    visible="false"
+                                    items="{recovery>/plans}"
+                                    noDataText="No recovery plans available">
+
+                                    <columns>
+
+                                        <Column width="9rem">
+                                            <Text text="Strategy" />
+                                        </Column>
+
+                                        <Column>
+                                            <Text text="Source" />
+                                        </Column>
+
+                                        <Column>
+                                            <Text text="Destination" />
+                                        </Column>
+
+                                        <Column width="7rem" hAlign="Right">
+                                            <Text text="Qty (units)" />
+                                        </Column>
+
+                                        <Column width="7rem" hAlign="Center">
+                                            <Text text="Recovery (days)" />
+                                        </Column>
+
+                                        <Column width="7rem" hAlign="Center">
+                                            <Text text="Transit (days)" />
+                                        </Column>
+
+                                        <Column width="8rem" hAlign="Right">
+                                            <Text text="Cost (USD)" />
+                                        </Column>
+
+                                        <Column width="6rem">
+                                            <Text text="Risk" />
+                                        </Column>
+
+                                        <Column width="7rem">
+                                            <Text text="Feasibility" />
+                                        </Column>
+
+                                        <Column width="7rem">
+                                            <Text text="Status" />
+                                        </Column>
+
+                                        <Column width="7rem" hAlign="Center">
+                                            <Text text="Select" />
+                                        </Column>
+
+                                    </columns>
+
+                                    <items>
+                                        <ColumnListItem>
+
+                                            <cells>
+
+                                                <Text text="{recovery>planType}" />
+
+                                                <Text
+                                                    text="{recovery>sourceName}"
+                                                    wrapping="false" />
+
+                                                <Text
+                                                    text="{recovery>destName}"
+                                                    wrapping="false" />
+
+                                                <ObjectNumber
+                                                    number="{recovery>recoveryQuantity}" />
+
+                                                <ObjectNumber
+                                                    number="{recovery>estimatedRecoveryDays}" />
+
+                                                <ObjectNumber
+                                                    number="{recovery>transitDays}" />
+
+                                                <ObjectNumber
+                                                    number="{recovery>estimatedCost}"
+                                                    state="{= ${recovery>estimatedCost} > 50000 ? 'Warning' : 'None'}" />
+
+                                                <ObjectStatus
+                                                    text="{recovery>riskLevel}"
+                                                    state="{= ${recovery>riskLevel} === 'Critical' ? 'Error' :
+                                                             ${recovery>riskLevel} === 'High' ? 'Warning' :
+                                                             ${recovery>riskLevel} === 'Medium' ? 'Information' :
+                                                             'Success' }" />
+
+                                                <ObjectStatus
+                                                    text="{recovery>feasibility}"
+                                                    state="{= ${recovery>feasibility} === 'Feasible' ? 'Success' :
+                                                             ${recovery>feasibility} === 'Marginal' ? 'Warning' :
+                                                             'Error' }" />
+
+                                                <ObjectStatus
+                                                    text="{recovery>status}"
+                                                    state="{= ${recovery>status} === 'Selected' ? 'Success' :
+                                                             ${recovery>status} === 'Approved' ? 'Success' :
+                                                             ${recovery>status} === 'Rejected' ? 'Error' :
+                                                             ${recovery>status} === 'InProgress' ? 'Warning' :
+                                                             'None' }" />
+
+                                                <Button
+                                                    text="Select"
+                                                    type="Transparent"
+                                                    enabled="{= ${recovery>feasibility} === 'Feasible' &amp;&amp; ${recovery>status} !== 'Approved' &amp;&amp; ${recovery>status} !== 'InProgress'}"
+                                                    press=".onSelectPlan">
+
+                                                    <customData>
+                                                        <core:CustomData
+                                                            key="planId"
+                                                            value="{recovery>ID}" />
+                                                    </customData>
+
+                                                </Button>
+
+                                            </cells>
+
+                                        </ColumnListItem>
+                                    </items>
+
+                                </Table>
+
+                                <Text
+                                    id="recoveryEmptyText"
+                                    text="{i18n>recovery.noData}"
+                                    class="ctEmptyState"
+                                    visible="true" />
+
+                            </VBox>
+                        </uxap:blocks>
+
+                    </uxap:ObjectPageSubSection>
+                </uxap:subSections>
+
+            </uxap:ObjectPageSection>
+
+            <uxap:ObjectPageSection
+                id="secRouting"
+                title="Routing Analysis">
+
+                <uxap:subSections>
+                    <uxap:ObjectPageSubSection>
+
+                        <uxap:blocks>
+                            <VBox class="sapUiSmallMargin">
+
+                                <HBox class="sapUiSmallMarginBottom">
+                                    <Button
+                                        id="btnAnalyzeRoutes"
+                                        text="Analyze Routes"
+                                        type="Default"
+                                        icon="sap-icon://map-2"
+                                        press=".onAnalyzeRoutes" />
+                                </HBox>
+
+                                <MessageStrip
+                                    id="routingMsg"
+                                    visible="false"
+                                    showCloseButton="false"
+                                    class="sapUiSmallMarginBottom" />
+
+                                <Table
+                                    id="routingTable"
+                                    visible="false"
+                                    items="{routing>/routes}"
+                                    noDataText="No routes available">
+
+                                    <columns>
+
+                                        <Column>
+                                            <Text text="Plan Type" />
+                                        </Column>
+
+                                        <Column>
+                                            <Text text="Source" />
+                                        </Column>
+
+                                        <Column>
+                                            <Text text="Destination" />
+                                        </Column>
+
+                                        <Column width="7rem" hAlign="Right">
+                                            <Text text="Distance (km)" />
+                                        </Column>
+
+                                        <Column width="7rem" hAlign="Center">
+                                            <Text text="Transit (days)" />
+                                        </Column>
+
+                                        <Column width="8rem">
+                                            <Text text="ETA" />
+                                        </Column>
+
+                                        <Column width="7rem">
+                                            <Text text="Mode" />
+                                        </Column>
+
+                                        <Column width="7rem">
+                                            <Text text="Route Risk" />
+                                        </Column>
+
+                                        <Column width="8rem" hAlign="Right">
+                                            <Text text="Transport Cost" />
+                                        </Column>
+
+                                        <Column>
+                                            <Text text="Status" />
+                                        </Column>
+
+                                    </columns>
+
+                                    <items>
+                                        <ColumnListItem>
+                                            <cells>
+
+                                                <Text text="{routing>planType}" />
+
+                                                <Text text="{routing>sourceLocation}" />
+
+                                                <Text text="{routing>destinationLocation}" />
+
+                                                <ObjectNumber
+                                                    number="{routing>distanceKm}" />
+
+                                                <ObjectNumber
+                                                    number="{routing>transitDays}" />
+
+                                                <Text
+                                                    text="{routing>estimatedArrival}" />
+
+                                                <Text
+                                                    text="{routing>transportMode}" />
+
+                                                <ObjectStatus
+                                                    text="{routing>routeRisk}"
+                                                    state="{= ${routing>routeRisk} === 'High' ? 'Error' :
+                                                             ${routing>routeRisk} === 'Medium' ? 'Warning' :
+                                                             'Success' }" />
+
+                                                <ObjectNumber
+                                                    number="{routing>transportCost}"
+                                                    unit="USD" />
+
+                                                <ObjectStatus
+                                                    text="{routing>routeStatus}"
+                                                    state="{= ${routing>routeStatus} === 'Feasible' ? 'Success' : 'Error' }" />
+
+                                            </cells>
+                                        </ColumnListItem>
+                                    </items>
+
+                                </Table>
+
+                                <Text
+                                    id="routingEmptyText"
+                                    text="{i18n>routing.noData}"
+                                    class="ctEmptyState"
+                                    visible="true" />
+
+                            </VBox>
+                        </uxap:blocks>
+
+                    </uxap:ObjectPageSubSection>
+                </uxap:subSections>
+
+            </uxap:ObjectPageSection>
+
+            <uxap:ObjectPageSection
+                id="secCostRisk"
+                title="Cost &amp; Risk">
+
+                <uxap:subSections>
+                    <uxap:ObjectPageSubSection>
+
+                        <uxap:blocks>
+                            <VBox
+                                id="costRiskContent"
+                                class="sapUiSmallMargin"
+                                visible="false">
+
+                                <HBox wrap="Wrap">
+
+                                    <Panel
+                                        headerText="Cost Analysis"
+                                        class="sapUiSmallMarginEnd"
+                                        width="300px">
+
+                                        <content>
+                                            <f:SimpleForm layout="ResponsiveGridLayout">
+
+                                                <f:content>
+
+                                                    <Label text="Total Cost" />
+                                                    <ObjectNumber
+                                                        id="crTotalCost"
+                                                        number="—"
+                                                        unit="USD"
+                                                        state="Warning"
+                                                        emphasized="true" />
+
+                                                    <Label text="Material Cost" />
+                                                    <ObjectNumber
+                                                        id="crMaterial"
+                                                        number="—"
+                                                        unit="USD" />
+
+                                                    <Label text="Transport Cost" />
+                                                    <ObjectNumber
+                                                        id="crTransport"
+                                                        number="—"
+                                                        unit="USD" />
+
+                                                    <Label text="Supplier Premium" />
+                                                    <ObjectNumber
+                                                        id="crPremium"
+                                                        number="—"
+                                                        unit="USD" />
+
+                                                    <Label text="Expedite Cost" />
+                                                    <ObjectNumber
+                                                        id="crExpedite"
+                                                        number="—"
+                                                        unit="USD" />
+
+                                                    <Label text="Transfer Cost" />
+                                                    <ObjectNumber
+                                                        id="crTransfer"
+                                                        number="—"
+                                                        unit="USD" />
+
+                                                </f:content>
+                                            </f:SimpleForm>
+                                        </content>
+
+                                    </Panel>
+
+                                    <Panel
+                                        headerText="Risk Assessment"
+                                        width="300px">
+
+                                        <content>
+                                            <f:SimpleForm layout="ResponsiveGridLayout">
+
+                                                <f:content>
+
+                                                    <Label text="Overall Risk Level" />
+                                                    <ObjectStatus
+                                                        id="crRiskLevel"
+                                                        text="—" />
+
+                                                    <Label text="Risk Score" />
+                                                    <ObjectNumber
+                                                        id="crRiskScore"
+                                                        number="—"
+                                                        unit="/ 100" />
+
+                                                    <Label text="Inventory Risk" />
+                                                    <ObjectStatus
+                                                        id="crInvRisk"
+                                                        text="—" />
+
+                                                    <Label text="Transit Risk" />
+                                                    <ObjectStatus
+                                                        id="crTransitRisk"
+                                                        text="—" />
+
+                                                    <Label text="Source Plant Safety" />
+                                                    <ObjectStatus
+                                                        id="crSrcSafe"
+                                                        text="—" />
+
+                                                </f:content>
+                                            </f:SimpleForm>
+                                        </content>
+
+                                    </Panel>
+
+                                </HBox>
+
+                                <Panel
+                                    headerText="Risk Factors"
+                                    class="sapUiSmallMarginTop">
+
+                                    <content>
+
+                                        <List
+                                            id="riskFactorsList"
+                                            items="{costRisk>/riskFactors}"
+                                            noDataText="No risk factors available">
+
+                                            <StandardListItem
+                                                title="{costRisk>factor}"
+                                                description="{costRisk>description}"
+                                                info="{costRisk>level}"
+                                                infoState="{= ${costRisk>level} === 'Critical' ? 'Error' :
+                                                             ${costRisk>level} === 'High' ? 'Warning' :
+                                                             ${costRisk>level} === 'Medium' ? 'Warning' :
+                                                             'Success' }" />
+
+                                        </List>
+
+                                    </content>
+                                </Panel>
+
+                            </VBox>
+
+                            <Text
+                                id="costRiskEmptyText"
+                                text="Generate recovery plans to view cost and risk analysis."
+                                class="ctEmptyState"
+                                visible="true" />
+
+                        </uxap:blocks>
+
+                    </uxap:ObjectPageSubSection>
+                </uxap:subSections>
+
+            </uxap:ObjectPageSection>
+
+            <uxap:ObjectPageSection
+                id="secAI"
+                title="Gemini AI Analysis">
+
+                <uxap:subSections>
+                    <uxap:ObjectPageSubSection>
+
+                        <uxap:blocks>
+                            <VBox class="sapUiSmallMargin">
+
+                                <HBox class="sapUiSmallMarginBottom">
+
+                                    <Button
+                                        id="btnGenerateAI"
+                                        text="Generate AI Explanation"
+                                        type="Default"
+                                        icon="sap-icon://ai"
+                                        press=".onGenerateAI" />
+
+                                    <Text
+                                        text="Powered by Gemini AI — explains deterministic analysis only"
+                                        class="sapUiSmallMarginBegin"
+                                        wrapping="true" />
+
+                                </HBox>
+
+                                <MessageStrip
+                                    id="aiMsg"
+                                    visible="false"
+                                    showCloseButton="false"
+                                    class="sapUiSmallMarginBottom" />
+
+                                <VBox
+                                    id="aiContent"
+                                    visible="false">
+
+                                    <HBox class="sapUiSmallMarginBottom">
+                                        <core:HTML
+                                            content="&lt;span class='ctAiBadge'&gt;AI-Generated Analysis&lt;/span&gt;" />
+                                    </HBox>
+
+                                    <VBox
+                                        id="aiExecutiveSummary"
+                                        class="ctAiSection sapUiSmallMarginBottom">
+
+                                        <Text
+                                            text="Executive Summary"
+                                            class="ctAiLabel" />
+
+                                        <Text
+                                            id="aiExecText"
+                                            text=""
+                                            class="ctAiText"
+                                            wrapping="true" />
+
+                                    </VBox>
+
+                                    <HBox wrap="Wrap">
+
+                                        <VBox
+                                            width="50%"
+                                            class="sapUiSmallMarginEnd">
+
+                                            <VBox class="ctAiSection sapUiTinyMarginBottom">
+                                                <Text
+                                                    text="Situation"
+                                                    class="ctAiLabel" />
+                                                <Text
+                                                    id="aiSituationText"
+                                                    text=""
+                                                    class="ctAiText"
+                                                    wrapping="true" />
+                                            </VBox>
+
+                                            <VBox class="ctAiSection sapUiTinyMarginBottom">
+                                                <Text
+                                                    text="Impact Explanation"
+                                                    class="ctAiLabel" />
+                                                <Text
+                                                    id="aiImpactText"
+                                                    text=""
+                                                    class="ctAiText"
+                                                    wrapping="true" />
+                                            </VBox>
+
+                                            <VBox class="ctAiSection">
+                                                <Text
+                                                    text="Recovery Explanation"
+                                                    class="ctAiLabel" />
+                                                <Text
+                                                    id="aiRecoveryText"
+                                                    text=""
+                                                    class="ctAiText"
+                                                    wrapping="true" />
+                                            </VBox>
+
+                                        </VBox>
+
+                                        <VBox width="48%">
+
+                                            <VBox class="ctAiSection sapUiTinyMarginBottom">
+                                                <Text
+                                                    text="Cost Explanation"
+                                                    class="ctAiLabel" />
+                                                <Text
+                                                    id="aiCostText"
+                                                    text=""
+                                                    class="ctAiText"
+                                                    wrapping="true" />
+                                            </VBox>
+
+                                            <VBox class="ctAiSection sapUiTinyMarginBottom">
+                                                <Text
+                                                    text="Risk Explanation"
+                                                    class="ctAiLabel" />
+                                                <Text
+                                                    id="aiRiskText"
+                                                    text=""
+                                                    class="ctAiText"
+                                                    wrapping="true" />
+                                            </VBox>
+
+                                            <VBox class="ctAiSection">
+                                                <Text
+                                                    text="Key Trade-offs"
+                                                    class="ctAiLabel" />
+                                                <Text
+                                                    id="aiTradeoffsText"
+                                                    text=""
+                                                    class="ctAiText"
+                                                    wrapping="true" />
+                                            </VBox>
+
+                                        </VBox>
+
+                                    </HBox>
+
+                                    <Panel
+                                        headerText="Recommended Next Action"
+                                        class="sapUiSmallMarginTop"
+                                        headerDesign="Emphasized">
+
+                                        <content>
+                                            <VBox class="sapUiSmallMargin">
+
+                                                <Text
+                                                    id="aiNextActionText"
+                                                    text=""
+                                                    class="ctAiText"
+                                                    wrapping="true" />
+
+                                                <HBox class="sapUiSmallMarginTop">
+
+                                                    <VBox class="sapUiSmallMarginEnd">
+                                                        <Label text="Confidence" />
+                                                        <ObjectStatus
+                                                            id="aiConfidence"
+                                                            text="" />
+                                                    </VBox>
+
+                                                    <VBox>
+                                                        <Label text="Urgency" />
+                                                        <ObjectStatus
+                                                            id="aiUrgency"
+                                                            text="" />
+                                                    </VBox>
+
+                                                </HBox>
+
+                                            </VBox>
+                                        </content>
+
+                                    </Panel>
+
+                                </VBox>
+
+                                <Text
+                                    id="aiEmptyText"
+                                    text="{i18n>ai.noData}"
+                                    class="ctEmptyState"
+                                    visible="true" />
+
+                            </VBox>
+                        </uxap:blocks>
+
+                    </uxap:ObjectPageSubSection>
+                </uxap:subSections>
+
+            </uxap:ObjectPageSection>
+
+            <uxap:ObjectPageSection
+                id="secApproval"
+                title="Manager Approval">
+
+                <uxap:subSections>
+                    <uxap:ObjectPageSubSection>
+
+                        <uxap:blocks>
+                            <VBox class="sapUiSmallMargin">
+
+                                <MessageStrip
+                                    id="approvalMsg"
+                                    visible="false"
+                                    showCloseButton="false"
+                                    class="sapUiSmallMarginBottom" />
+
+                                <Panel
+                                    id="approvalPanel"
+                                    visible="false"
+                                    headerText="Selected Recovery Plan">
+
+                                    <content>
+
+                                        <VBox class="sapUiSmallMargin">
+
+                                            <f:SimpleForm
+                                                layout="ResponsiveGridLayout"
+                                                columnsM="2"
+                                                columnsL="3">
+
+                                                <f:content>
+
+                                                    <Label text="Strategy" />
+                                                    <Text
+                                                        id="apPlanType"
+                                                        text="" />
+
+                                                    <Label text="Recovery Quantity" />
+                                                    <ObjectNumber
+                                                        id="apQuantity"
+                                                        number=""
+                                                        unit="units" />
+
+                                                    <Label text="Total Cost" />
+                                                    <ObjectNumber
+                                                        id="apCost"
+                                                        number=""
+                                                        unit="USD"
+                                                        state="Warning"
+                                                        emphasized="true" />
+
+                                                    <Label text="Recovery Time" />
+                                                    <ObjectNumber
+                                                        id="apTime"
+                                                        number=""
+                                                        unit="days" />
+
+                                                    <Label text="Risk Level" />
+                                                    <ObjectStatus
+                                                        id="apRisk"
+                                                        text="" />
+
+                                                    <Label text="Source Plant Safety" />
+                                                    <ObjectStatus
+                                                        id="apSrcSafe"
+                                                        text="" />
+
+                                                </f:content>
+                                            </f:SimpleForm>
+
+                                            <VBox class="sapUiSmallMarginTop">
+
+                                                <Label
+                                                    text="Approver Name"
+                                                    required="true" />
+
+                                                <Input
+                                                    id="approverName"
+                                                    placeholder="Enter your name"
+                                                    width="300px"
+                                                    class="sapUiSmallMarginBottom" />
+
+                                                <Label text="Comments (optional)" />
+
+                                                <TextArea
+                                                    id="approverComments"
+                                                    rows="3"
+                                                    width="100%"
+                                                    placeholder="Add any comments for the audit trail..."
+                                                    class="sapUiSmallMarginBottom" />
+
+                                            </VBox>
+
+                                            <HBox class="sapUiSmallMarginTop">
+
+                                                <Button
+                                                    id="btnApprove"
+                                                    text="Approve Recovery"
+                                                    type="Accept"
+                                                    icon="sap-icon://accept"
+                                                    press=".onApproveRecovery"
+                                                    class="sapUiSmallMarginEnd" />
+
+                                                <Button
+                                                    id="btnReject"
+                                                    text="Reject Recovery"
+                                                    type="Reject"
+                                                    icon="sap-icon://decline"
+                                                    press=".onRejectRecovery" />
+
+                                            </HBox>
+
+                                        </VBox>
+
+                                    </content>
+                                </Panel>
+
+                                <Text
+                                    id="approvalEmptyText"
+                                    text="{i18n>approval.noData}"
+                                    class="ctEmptyState"
+                                    visible="true" />
+
+                            </VBox>
+                        </uxap:blocks>
+
+                    </uxap:ObjectPageSubSection>
+                </uxap:subSections>
+
+            </uxap:ObjectPageSection>
+
+            <uxap:ObjectPageSection
+                id="secMonitoring"
+                title="Recovery Monitoring">
+
+                <uxap:subSections>
+                    <uxap:ObjectPageSubSection>
+
+                        <uxap:blocks>
+                            <VBox class="sapUiSmallMargin">
+
+                                <HBox class="sapUiSmallMarginBottom">
+
+                                    <Button
+                                        id="btnStartRecovery"
+                                        text="Start Recovery Execution"
+                                        type="Emphasized"
+                                        icon="sap-icon://play"
+                                        press=".onStartRecovery"
+                                        enabled="false" />
+
+                                    <Button
+                                        id="btnCompleteRecovery"
+                                        text="Mark Complete"
+                                        type="Accept"
+                                        icon="sap-icon://complete"
+                                        press=".onCompleteRecovery"
+                                        class="sapUiSmallMarginBegin"
+                                        enabled="false" />
+
+                                </HBox>
+
+                                <MessageStrip
+                                    id="monitoringMsg"
+                                    visible="false"
+                                    showCloseButton="false"
+                                    class="sapUiSmallMarginBottom" />
+
+                                <Panel
+                                    id="monitoringPanel"
+                                    visible="false"
+                                    headerText="Recovery Progress">
+
+                                    <content>
+
+                                        <VBox class="sapUiSmallMargin">
+
+                                            <f:SimpleForm
+                                                layout="ResponsiveGridLayout"
+                                                columnsM="2"
+                                                columnsL="3">
+
+                                                <f:content>
+
+                                                    <Label text="Status" />
+                                                    <ObjectStatus
+                                                        id="monStatus"
+                                                        text="" />
+
+                                                    <Label text="Planned Quantity" />
+                                                    <ObjectNumber
+                                                        id="monPlanned"
+                                                        number=""
+                                                        unit="units" />
+
+                                                    <Label text="Recovered Quantity" />
+                                                    <ObjectNumber
+                                                        id="monRecovered"
+                                                        number=""
+                                                        unit="units"
+                                                        state="Success" />
+
+                                                    <Label text="Expected Arrival" />
+                                                    <Text
+                                                        id="monETA"
+                                                        text="" />
+
+                                                    <Label text="Last Updated" />
+                                                    <Text
+                                                        id="monLastUpdated"
+                                                        text="" />
+
+                                                </f:content>
+                                            </f:SimpleForm>
+
+                                            <Label
+                                                text="Completion Progress"
+                                                class="sapUiTinyMarginTop" />
+
+                                            <ProgressIndicator
+                                                id="monProgress"
+                                                percentValue="0"
+                                                displayValue="0%"
+                                                state="Information"
+                                                class="sapUiSmallMarginBottom"
+                                                width="100%" />
+
+                                            <Panel
+                                                headerText="Update Recovery Status"
+                                                class="sapUiSmallMarginTop">
+
+                                                <content>
+
+                                                    <VBox class="sapUiSmallMargin">
+
+                                                        <f:SimpleForm
+                                                            layout="ResponsiveGridLayout"
+                                                            columnsM="2">
+
+                                                            <f:content>
+
+                                                                <Label text="New Status" />
+
+                                                                <Select
+                                                                    id="monNewStatus"
+                                                                    width="200px">
+
+                                                                    <core:Item
+                                                                        key="Initiated"
+                                                                        text="Initiated" />
+
+                                                                    <core:Item
+                                                                        key="InTransit"
+                                                                        text="In Transit" />
+
+                                                                    <core:Item
+                                                                        key="Delayed"
+                                                                        text="Delayed" />
+
+                                                                    <core:Item
+                                                                        key="Delivered"
+                                                                        text="Delivered" />
+
+                                                                    <core:Item
+                                                                        key="Completed"
+                                                                        text="Completed" />
+
+                                                                </Select>
+
+                                                                <Label text="Recovered Quantity" />
+
+                                                                <Input
+                                                                    id="monUpdateQty"
+                                                                    type="Number"
+                                                                    placeholder="Enter recovered quantity"
+                                                                    width="200px" />
+
+                                                                <Label text="Updated By" />
+
+                                                                <Input
+                                                                    id="monUpdatedBy"
+                                                                    placeholder="Your name"
+                                                                    width="200px" />
+
+                                                                <Label text="Notes" />
+
+                                                                <TextArea
+                                                                    id="monNotes"
+                                                                    rows="2"
+                                                                    width="100%"
+                                                                    placeholder="Update notes..." />
+
+                                                            </f:content>
+
+                                                        </f:SimpleForm>
+
+                                                        <Button
+                                                            text="Update Status"
+                                                            type="Default"
+                                                            icon="sap-icon://edit"
+                                                            press=".onUpdateMonitoring"
+                                                            class="sapUiSmallMarginTop" />
+
+                                                    </VBox>
+
+                                                </content>
+
+                                            </Panel>
+
+                                        </VBox>
+
+                                    </content>
+
+                                </Panel>
+
+                                <Text
+                                    id="monitoringEmptyText"
+                                    text="{i18n>monitoring.noData}"
+                                    class="ctEmptyState"
+                                    visible="true" />
+
+                            </VBox>
+                        </uxap:blocks>
+
+                    </uxap:ObjectPageSubSection>
+                </uxap:subSections>
+
+            </uxap:ObjectPageSection>
+
+            <uxap:ObjectPageSection
+                id="secAudit"
+                title="Audit Trail">
+
+                <uxap:subSections>
+                    <uxap:ObjectPageSubSection>
+
+                        <uxap:blocks>
+                            <VBox class="sapUiSmallMargin">
+
+                                <Table
+                                    id="auditTable"
+                                    items="{audit>/logs}"
+                                    noDataText="{i18n>audit.noData}">
+
+                                    <columns>
+
+                                        <Column width="8rem">
+                                            <Text text="Time" />
+                                        </Column>
+
+                                        <Column width="12rem">
+                                            <Text text="Event" />
+                                        </Column>
+
+                                        <Column width="8rem">
+                                            <Text text="Actor" />
+                                        </Column>
+
+                                        <Column width="7rem">
+                                            <Text text="From" />
+                                        </Column>
+
+                                        <Column width="7rem">
+                                            <Text text="To" />
+                                        </Column>
+
+                                        <Column>
+                                            <Text text="Details" />
+                                        </Column>
+
+                                    </columns>
+
+                                    <items>
+
+                                        <ColumnListItem>
+                                            <cells>
+
+                                                <Text
+                                                    text="{audit>timestampFormatted}"
+                                                    class="ctAuditTime"
+                                                    wrapping="false" />
+
+                                                <ObjectStatus
+                                                    text="{audit>action}"
+                                                    state="{= ${audit>severity} === 'Error' ? 'Error' :
+                                                             ${audit>severity} === 'Warning' ? 'Warning' :
+                                                             ${audit>severity} === 'Critical' ? 'Error' :
+                                                             'Success' }" />
+
+                                                <Text
+                                                    text="{audit>actor}"
+                                                    wrapping="false" />
+
+                                                <Text
+                                                    text="{audit>previousStatus}"
+                                                    wrapping="false" />
+
+                                                <Text
+                                                    text="{audit>newStatus}"
+                                                    wrapping="false" />
+
+                                                <Text
+                                                    text="{audit>details}"
+                                                    wrapping="true" />
+
+                                            </cells>
+                                        </ColumnListItem>
+
+                                    </items>
+
+                                </Table>
+
+                            </VBox>
+                        </uxap:blocks>
+
+                    </uxap:ObjectPageSubSection>
+                </uxap:subSections>
+
+            </uxap:ObjectPageSection>
+
+        </uxap:sections>
+
+    </uxap:ObjectPageLayout>
+
+</mvc:View>
